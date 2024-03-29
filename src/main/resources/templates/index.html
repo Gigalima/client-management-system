@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Clientes</title>
+    <script type="text/javascript" src="/webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/webjars/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/script.js}"></script>
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}">
+    <link href="/webjars/bootstrap/5.3.2/css/bootstrap.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div th:if="${exclusaoSucesso}" class="alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x" role="alert" id="mensagemSucesso">
+        Exclusão realizada com sucesso!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${sucesso}" class="alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x" role="alert" id="atualizacaoSucesso">
+        Registro atualizado com sucesso!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${cadastroSucesso}" class="alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x" role="alert" id="cadastroSucesso">
+        Cadastro realizado com sucesso!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <h1 class="text-center text-primary">Gerenciamento de Clientes</h1>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <form class="d-flex" role="search" th:action="@{/buscarClientes}">
+                <div class="form-floating w-100">
+                    <input type="search" name="nome" id="nome" class="form-control">
+                    <label for="nome">Cliente</label>
+                </div>
+                <div class="form-floating w-75">
+                    <input type="search" name="cpf" id="cpf" class="form-control ms-1" onkeypress="validarCPF(this)">
+                    <label for="cpf">CPF</label>
+                </div>
+                <select name="status" id="status" class="form-select w-50 ms-2">
+                    <option value=""></option>
+                    <option value="A" th:selected="${statusSelecionado != null && statusSelecionado == 'A'}">Ativo</option>
+                    <option value="I" th:selected="${statusSelecionado != null && statusSelecionado == 'I'}">Inativo</option>
+                </select>
+                <button class="btn btn-outline-success ms-2" type="submit">Buscar</button>
+            </form>
+        </div>
+    </nav>
+    <div class="ms-4 mb-2">
+        <a th:href="@{/cadastro}"><button type="button" class="btn btn-primary">Cadastrar</button></a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr class="table-primary">
+                <th>Cliente</th>
+                <th>CPF</th>
+                <th>Telefone</th>
+                <th>E-mail</th>
+                <th>Endereço</th>
+                <th>Data do Cadastro</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cliente : ${clientes}">
+                <td th:text="${cliente.nome}"></td>
+                <td th:text="${cliente.cpf}"></td>
+                <td th:text="${cliente.telefone}"></td>
+                <td th:text="${cliente.email}"></td>
+                <td th:text="${cliente.endereco}"></td>
+                <td th:text="${cliente.dataCadastro}"></td>
+                <td>
+                    <a th:href="@{/atualiza/{id}(id=${cliente.id})}" class="btn btn-secondary btn-sm">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <a th:href="@{/delete/{id}(id=${cliente.id})}" class="btn btn-danger btn-sm" id="deleteButton" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir Registro</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza que gostaria de excluir esse registro?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <a href="" class="btn btn-danger" id="delRef">Confirmar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

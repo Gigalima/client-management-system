@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualizar Cliente</title>
+    <script type="text/javascript" src="/webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/webjars/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/script.js}"></script>
+    <link rel="stylesheet" th:href="@{/styles/style.css}">
+    <link href="/webjars/bootstrap/5.3.2/css/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 th:text="${cliente.nome + ' [' + cliente.id + ']'}" class="text-center text-primary"></h1>
+        <form th:action="@{/atualiza/{id}(id=${cliente.id})}" th:object="${cliente}" method="post" class="container text-center mt-3">
+            <div>
+                <label for="nome" class="form-label">
+                    Nome <input type="text" name="nome" class="form-control" id="nome" th:field="*{nome}" required>
+                    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" th:class="errors"></span>
+                </label>
+            </div>
+            <div>
+                <label for="cpf" class="form-label">
+                    CPF <input type="text" name="cpf" id="cpf" class="form-control" th:field="*{cpf}" maxlength="14" onkeypress="validarCPF(this)">
+                    <span th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}" th:class="errors"></span>
+                    <div th:if="${cpfError}" th:class="errors" role="alert">
+                        <span th:text="${cpfError}"></span>
+                    </div>
+                </label>
+            </div>
+            <div>
+                <label for="email" class="form-label">
+                    E-mail <input type="email" name="email" class="form-control" id="email" th:field="*{email}">
+                </label>
+            </div>
+            <div>
+                <label for="telefone" class="form-label">
+                    Telefone <input type="tel" name="telefone" class="form-control" id="telefone"  th:field="*{telefone}" maxlength="15" onkeypress="validarTelefone(this)">
+                </label>
+            </div>
+            <div>
+                <label for="endereco" class="form-label">
+                    Endereco <input type="text" name="endereco" class="form-control" id="endereco" th:field="*{endereco}">
+                </label>
+            </div>
+            <div>
+                <label for="datacadastro" class="form-label">
+                    Data Cadastro <input type="date" name="datacadastro" class="form-control" id="datacadastro" th:field="*{dataCadastro}">
+                </label>
+            </div>
+            <div>
+                <label class="form label">
+                    <select name="status" id="status" class="form-select mb-2">
+                        <option value="A" th:selected="${statusSelecionado != null && statusSelecionado == 'A'}">Ativo</option>
+                        <option value="I" th:selected="${statusSelecionado != null && statusSelecionado == 'I'}">Inativo</option>
+                    </select>
+                </label>
+
+            </div>
+            <div>
+                <input type="submit" value="Atualizar" class="btn btn-warning" id="atualizaButton" data-bs-toggle="modal" data-bs-target="#atualizaModal">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

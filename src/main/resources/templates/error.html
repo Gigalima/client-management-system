@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erro desconhecido</title>
+    <link href="/webjars/bootstrap/5.3.2/css/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+<div class="container text-center mt-5">
+    <h1>Erro desconhecido...</h1>
+    <p>Desculpe, mas algo deu errado.</p>
+    <p>Por favor, tente novamente mais tarde ou contate o administrador do sistema</p>
+    <p>**Detalhes do erro:**</p>
+    <p th:if="${mensagemErro != null}">
+    <pre th:text="${mensagemErro}"></pre>
+    </p>
+    <p th:if="${status != null}">
+        <strong>Código de erro:</strong> <span th:text="${status}"></span>
+    </p>
+    <a href="/" class="btn btn-primary mt-3">Voltar para a página inicial</a>
+</div>
+</body>
+</html>
