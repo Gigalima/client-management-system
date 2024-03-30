@@ -14,7 +14,7 @@ Sistema desenvolvido com o objetivo de realizar operações básicas de CRUD (Cr
 - **Back-end**: Spring Boot
 - **Front-end**: Thymeleaf, Bootstrap, jQuery
 - **Banco de Dados**: H2
-- **Testes Unitários**: JUnit, Mockito
+- **Testes Unitários**: JUnit
 
 ## Pré-requisitos
 
